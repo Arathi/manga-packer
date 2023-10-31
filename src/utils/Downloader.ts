@@ -1,6 +1,7 @@
 import {Page} from "../domains/Page";
 import Axios, {AxiosInstance, AxiosProgressEvent} from "axios";
 import LocalForage from "localforage";
+import {Status} from "../domains/types";
 
 export default class Downloader {
   axios: AxiosInstance;
@@ -45,7 +46,7 @@ export default class Downloader {
     blob = resp.data as Blob;
     console.info(`${page.id}下载完成：`, blob);
     page.total = page.loaded = blob.size;
-    page.status = 2;
+    page.status = Status.Success;
 
     // 写入缓存
     this.db.setItem(page.id, blob).then((img) => {
@@ -53,5 +54,10 @@ export default class Downloader {
     });
 
     return blob;
+  }
+
+  async getFromCache(page: Page): Promise<Blob | null> {
+    const cache = await this.db.getItem<Blob>(page.id);
+    return cache;
   }
 }

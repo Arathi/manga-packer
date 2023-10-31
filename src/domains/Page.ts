@@ -5,7 +5,7 @@ export class Page {
   mangaId: string;
   fileName: string;
   url: string;
-  status: number;
+  status: Status;
   total: number;
   loaded: number;
 

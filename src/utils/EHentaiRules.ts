@@ -2,7 +2,7 @@ import SiteRules from "./SiteRules";
 import {Manga} from "../domains/Manga";
 import {Page} from "../domains/Page";
 
-export default class GeneralRules implements SiteRules {
+export default class EHentaiRules implements SiteRules {
   crawlManga(): Manga | null {
     return null;
   }
@@ -12,8 +12,6 @@ export default class GeneralRules implements SiteRules {
   }
 
   crawlPages(mangaId: string): Page[] {
-    const pages: Page[] = [];
-
-    return pages;
+    return [];
   }
 }

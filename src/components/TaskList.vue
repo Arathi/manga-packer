@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import ProgressBar from "./ProgressBar.vue";
-import {computed, inject, reactive, ref} from "vue";
+import {computed, inject, onMounted, reactive, ref} from "vue";
 import TaskInfo from "./TaskInfo.vue";
 import {Page} from "../domains/Page";
 import SiteRules from "../utils/SiteRules";
 import Downloader from "../utils/Downloader";
 import Packer from "../utils/Packer";
-import { saveAs } from "file-saver";
+import {saveAs} from "file-saver";
 import {Manga} from "../domains/Manga";
+import {Status} from "../domains/types";
 
+// region props
 interface Props {
   width?: number;
   height?: number;
@@ -20,26 +22,47 @@ const props = withDefaults(defineProps<Props>(), {
   height: 540,
   backgroundColor: '#ccccff',
 });
+// endregion
 
+// region inject
 const rules = inject<SiteRules>("rules");
 const downloader = inject<Downloader>("downloader");
 const packer = inject<Packer>("packer");
+// endregion
 
-const tasks = ref(50);
-
+// region reactive
 const manga = ref<Manga|null>(null);
 const pages = reactive<Page[]>([]);
+// endregion
 
+onMounted(() => {
+  fetch();
+});
+
+// region computed
 const displayPages = computed(() => {
   // TODO 过滤
   // TODO 排序
   return pages;
 });
 
-function fetch() {
-  console.info("获取");
+const pageAmount = computed(() => pages.length);
+
+const completedAmount = computed(() => {
+  const completedPages = pages.filter(p => p.status == Status.Success);
+  return completedPages.length;
+});
+// endregion
+
+// region methods
+async function fetch() {
   if (rules == undefined) {
     console.warn("无法载入站点规则！");
+    return;
+  }
+
+  if (downloader == undefined) {
+    console.warn("下载器注入失败！");
     return;
   }
 
@@ -52,6 +75,17 @@ function fetch() {
   // 清空
   pages.length = 0;
   let results = rules.crawlPages(manga.value.id);
+  for (const page of results) {
+    let cache = await downloader.getFromCache(page);
+    if (cache != null) {
+      page.status = Status.Success;
+      page.loaded = page.total = cache.size;
+    }
+    else {
+      page.status = Status.Pending;
+    }
+  }
+
   pages.push(...results);
 }
 
@@ -86,32 +120,24 @@ function pack() {
     saveAs(blob, `${mg.fileName}.zip`);
   });
 }
-
-function save() {
-  console.info("保存");
-}
+// endregion
 </script>
 
 <template>
   <div class="task-list">
     <div class="group buttons">
-      <button type="button" @click="fetch">获取</button>
       <button type="button" @click="download">下载</button>
       <button type="button" @click="pack">打包</button>
-      <button type="button" @click="save">保存</button>
     </div>
 
     <div class="group progress-group">
       <progress-bar
         class="progress progress-overall"
         :min="0"
-        :max="100"
-        :value="62"
+        :max="pageAmount"
+        :value="completedAmount"
         :height="32"
       />
-    </div>
-
-    <div class="group filters">
     </div>
 
     <div class="group tasks">
@@ -164,11 +190,6 @@ function save() {
       width: 100%;
       height: 32px;
     }
-  }
-
-  .filters {
-    display: none;
-    flex-direction: row;
   }
 
   .tasks {

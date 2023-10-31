@@ -7,7 +7,7 @@ export default class NHentaiRules implements SiteRules {
     return null;
   }
 
-  crawlPage(): Page | null {
+  crawlPage(node: HTMLElement, mangaId: string, index: number, pageLength: number): Page | null {
     return null;
   }
 

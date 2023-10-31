@@ -17,8 +17,27 @@ export default class TelegraphRules implements SiteRules {
     return new Manga(id, name, referer);
   }
 
-  crawlPage(): Page | null {
-    return null;
+  crawlPage(node: HTMLElement, mangaId: string, index: number, pageLength: number): Page | null {
+    const image: HTMLImageElement = node.getElementsByTagName("img")[0];
+    const url = image.src;
+    const startAt = url.lastIndexOf("/") + 1;
+    const originFileName = url.substring(startAt);
+    const extStartAt = originFileName.lastIndexOf(".") + 1;
+    const extName = originFileName.substring(extStartAt);
+    let pageNumber = `${index+1}`;
+    if (pageNumber.length < pageLength) {
+      const delta = pageLength - pageNumber.length;
+      pageNumber = "0".repeat(delta) + pageNumber;
+    }
+    const fileName = `${pageNumber}.${extName}`;
+    const page: Page = new Page(
+      `${mangaId}-${pageNumber}`,
+      mangaId,
+      fileName,
+      url
+    );
+
+    return page;
   }
 
   crawlPages(mangaId: string): Page[] {
@@ -28,25 +47,10 @@ export default class TelegraphRules implements SiteRules {
     const pageLength = Math.floor(Math.log10(amount)+1);
     for (let index = 0; index < amount; index++) {
       const figure = figures[index];
-      const image: HTMLImageElement = figure.getElementsByTagName("img")[0];
-      const url = image.src;
-      const startAt = url.lastIndexOf("/") + 1;
-      const originFileName = url.substring(startAt);
-      const extStartAt = originFileName.lastIndexOf(".") + 1;
-      const extName = originFileName.substring(extStartAt);
-      let pageNumber = `${index+1}`;
-      if (pageNumber.length < pageLength) {
-        const delta = pageLength - pageNumber.length;
-        pageNumber = "0".repeat(delta) + pageNumber;
+      const page = this.crawlPage(figure, mangaId, index, pageLength);
+      if (page != null) {
+        pages.push(page);
       }
-      const fileName = `${pageNumber}.${extName}`;
-      const page: Page = new Page(
-        `${mangaId}-${pageNumber}`,
-        mangaId,
-        fileName,
-        url
-      );
-      pages.push(page);
     }
     return pages;
   }
