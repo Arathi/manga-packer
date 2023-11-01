@@ -10,6 +10,8 @@ import NHentaiRules from "./utils/NHentaiRules";
 import Downloader from "./utils/Downloader";
 import LocalForage from "localforage";
 import Packer from "./utils/Packer";
+import DownloaderAxios from "./utils/DownloaderAxios";
+import DownloaderXHR from "./utils/DownloaderXHR";
 
 const mountPoint = (() => {
   const node = document.createElement('div');
@@ -26,7 +28,7 @@ let db = LocalForage.createInstance({
 });
 
 let rules: SiteRules = new GeneralRules();
-let downloader: Downloader = new Downloader(db);
+let downloader: Downloader | null = null;
 let packer: Packer = new Packer(db);
 
 const url = new URL(unsafeWindow.location.href);
@@ -35,10 +37,12 @@ switch (url.host) {
   case "telegra.ph":
     console.info("telegraph");
     rules = new TelegraphRules();
+    downloader = new DownloaderAxios(db);
     break;
   case "nhentai.net":
     console.info("nhentai");
     rules = new NHentaiRules();
+    downloader = new DownloaderXHR(db);
     break;
   default:
     console.warn("others");

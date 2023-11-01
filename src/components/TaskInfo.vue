@@ -100,6 +100,7 @@ function onMouseLeave() {
   align-items: center;
   height: 28px;
   user-select: none;
+  color: black;
 
   .status {
     position: relative;

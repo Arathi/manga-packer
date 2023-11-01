@@ -4,7 +4,11 @@ import {Page} from "../domains/Page";
 import sha1 from "crypto-js/sha1";
 
 export default class TelegraphRules implements SiteRules {
-  crawlManga(): Manga | null {
+  constructor() {
+    console.info("正在创建Telegraph规则");
+  }
+
+  async crawlManga(): Promise<Manga|null> {
     let referer = document.location.href;
     let hash = sha1(referer);
     let id = `tg-${hash}`;
@@ -17,37 +21,41 @@ export default class TelegraphRules implements SiteRules {
     return new Manga(id, name, referer);
   }
 
-  crawlPage(node: HTMLElement, mangaId: string, index: number, pageLength: number): Page | null {
+  async crawlPage(node: HTMLElement, mangaId: string, index: number, pageLength: number): Promise<Page|null> {
     const image: HTMLImageElement = node.getElementsByTagName("img")[0];
     const url = image.src;
+
     const startAt = url.lastIndexOf("/") + 1;
     const originFileName = url.substring(startAt);
     const extStartAt = originFileName.lastIndexOf(".") + 1;
     const extName = originFileName.substring(extStartAt);
+
     let pageNumber = `${index+1}`;
     if (pageNumber.length < pageLength) {
       const delta = pageLength - pageNumber.length;
       pageNumber = "0".repeat(delta) + pageNumber;
     }
+
     const fileName = `${pageNumber}.${extName}`;
     const page: Page = new Page(
       `${mangaId}-${pageNumber}`,
       mangaId,
       fileName,
-      url
+      url,
+      document.location.href
     );
 
     return page;
   }
 
-  crawlPages(mangaId: string): Page[] {
+  async crawlPages(mangaId: string): Promise<Page[]> {
     const pages: Page[] = [];
     const figures = document.getElementsByTagName("figure");
     const amount = figures.length;
     const pageLength = Math.floor(Math.log10(amount)+1);
     for (let index = 0; index < amount; index++) {
       const figure = figures[index];
-      const page = this.crawlPage(figure, mangaId, index, pageLength);
+      const page = await this.crawlPage(figure, mangaId, index, pageLength);
       if (page != null) {
         pages.push(page);
       }

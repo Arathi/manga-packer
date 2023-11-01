@@ -3,17 +3,15 @@ import {Manga} from "../domains/Manga";
 import {Page} from "../domains/Page";
 
 export default class GeneralRules implements SiteRules {
-  crawlManga(): Manga | null {
+  async crawlManga(): Promise<Manga|null> {
     return null;
   }
 
-  crawlPage(node: HTMLElement, mangaId: string, index: number, pageLength: number): Page | null {
+  async crawlPage(node: HTMLElement, mangaId: string, index: number, pageLength: number): Promise<Page|null> {
     return null;
   }
 
-  crawlPages(mangaId: string): Page[] {
-    const pages: Page[] = [];
-
-    return pages;
+  async crawlPages(mangaId: string): Promise<Page[]> {
+    return [];
   }
 }

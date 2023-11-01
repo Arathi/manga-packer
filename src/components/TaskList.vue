@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import ProgressBar from "./ProgressBar.vue";
 import {computed, inject, onMounted, reactive, ref} from "vue";
+import {saveAs} from "file-saver";
+
+import ProgressBar from "./ProgressBar.vue";
 import TaskInfo from "./TaskInfo.vue";
-import {Page} from "../domains/Page";
+
 import SiteRules from "../utils/SiteRules";
 import Downloader from "../utils/Downloader";
 import Packer from "../utils/Packer";
-import {saveAs} from "file-saver";
+
+import {Page} from "../domains/Page";
 import {Manga} from "../domains/Manga";
 import {Status} from "../domains/types";
 
@@ -55,6 +58,9 @@ const completedAmount = computed(() => {
 // endregion
 
 // region methods
+/**
+ * 获取任务
+ */
 async function fetch() {
   if (rules == undefined) {
     console.warn("无法载入站点规则！");
@@ -66,15 +72,16 @@ async function fetch() {
     return;
   }
 
-  manga.value = rules.crawlManga();
+  manga.value = await rules.crawlManga();
   if (manga.value == null) {
     console.warn("无法获取Manga信息！");
     return;
   }
+  console.info("获取Manga信息：", manga.value);
 
   // 清空
   pages.length = 0;
-  let results = rules.crawlPages(manga.value.id);
+  let results = await rules.crawlPages(manga.value.id);
   for (const page of results) {
     let cache = await downloader.getFromCache(page);
     if (cache != null) {
@@ -89,17 +96,24 @@ async function fetch() {
   pages.push(...results);
 }
 
+/**
+ * 下载
+ */
 function download() {
   if (downloader == undefined) {
     console.warn("下载器注入失败！");
     return;
   }
 
+  downloader.manga = manga.value;
   for (const page of pages) {
     downloader.download(page);
   }
 }
 
+/**
+ * 打包
+ */
 function pack() {
   if (packer == undefined) {
     console.warn("打包器注入失败！");
@@ -120,6 +134,12 @@ function pack() {
     saveAs(blob, `${mg.fileName}.zip`);
   });
 }
+
+/**
+ * 打开设置窗口
+ */
+function openSettingDialog() {
+}
 // endregion
 </script>
 
@@ -128,6 +148,7 @@ function pack() {
     <div class="group buttons">
       <button type="button" @click="download">下载</button>
       <button type="button" @click="pack">打包</button>
+      <button type="button" @click="openSettingDialog">设置</button>
     </div>
 
     <div class="group progress-group">

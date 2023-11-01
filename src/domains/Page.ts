@@ -5,15 +5,17 @@ export class Page {
   mangaId: string;
   fileName: string;
   url: string;
+  referer: string|null;
   status: Status;
   total: number;
   loaded: number;
 
-  constructor(id: string, mangaId: string, fileName: string, url: string) {
+  constructor(id: string, mangaId: string, fileName: string, url: string, referer: string|null) {
     this.id = id;
     this.mangaId = mangaId;
     this.fileName = fileName;
     this.url = url;
+    this.referer = referer;
     this.status = Status.Pending;
     this.total = 0;
     this.loaded = 0;
