@@ -1,6 +1,7 @@
 import Axios, {AxiosHeaders, AxiosInstance, AxiosProgressEvent} from "axios";
 import Downloader from "./Downloader";
 import {Page} from "../domains/Page";
+import {Status} from "../domains/types";
 
 export default class DownloaderAxios extends Downloader {
   axios: AxiosInstance;
@@ -35,6 +36,9 @@ export default class DownloaderAxios extends Downloader {
     // 获取blob
     const blob = resp.data as Blob;
     console.info(`${page.id}下载完成：`, blob);
+    page.status = Status.Success;
+    page.loaded = page.total = blob.size;
+    this.saveToCache(page, blob);
 
     return true;
   }
