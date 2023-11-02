@@ -38,7 +38,7 @@ switch (url.host) {
   case "telegra.ph":
     console.info("telegraph");
     rules = new TelegraphRules();
-    downloader = new DownloaderAxios(db);
+    downloader = new DownloaderXHR(db);
     break;
   case "nhentai.net":
     console.info("nhentai");
