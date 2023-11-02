@@ -7,10 +7,6 @@ export default class GeneralRules implements SiteRules {
     return null;
   }
 
-  async crawlPage(node: HTMLElement, mangaId: string, index: number, pageLength: number): Promise<Page|null> {
-    return null;
-  }
-
   async crawlPages(mangaId: string): Promise<Page[]> {
     return [];
   }

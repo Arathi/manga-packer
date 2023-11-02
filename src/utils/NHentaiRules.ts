@@ -60,10 +60,6 @@ export default class NHentaiRules implements SiteRules {
     return new Manga(id, name, referer);
   }
 
-  async crawlPage(node: HTMLElement, mangaId: string, index: number, pageLength: number): Promise<Page|null> {
-    return null;
-  }
-
   async crawlPages(mangaId: string): Promise<Page[]> {
     const pages: Page[] = [];
 

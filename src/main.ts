@@ -12,6 +12,7 @@ import LocalForage from "localforage";
 import Packer from "./utils/Packer";
 import DownloaderAxios from "./utils/DownloaderAxios";
 import DownloaderXHR from "./utils/DownloaderXHR";
+import EHentaiRules from "./utils/EHentaiRules";
 
 const mountPoint = (() => {
   const node = document.createElement('div');
@@ -42,6 +43,11 @@ switch (url.host) {
   case "nhentai.net":
     console.info("nhentai");
     rules = new NHentaiRules();
+    downloader = new DownloaderXHR(db);
+    break;
+  case "e-hentai.org":
+    console.info("e-hentai");
+    rules = new EHentaiRules();
     downloader = new DownloaderXHR(db);
     break;
   default:

@@ -12,7 +12,11 @@ export default defineConfig({
       userscript: {
         icon: 'https://vitejs.dev/logo.svg',
         namespace: 'npm/vite-plugin-monkey',
-        match: ['https://telegra.ph/*', 'https://nhentai.net/g/*/'],
+        match: [
+          'https://telegra.ph/*',
+          'https://nhentai.net/g/*/',
+          'https://e-hentai.org/g/*/*'
+        ],
       },
       build: {
         externalGlobals: {
