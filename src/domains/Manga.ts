@@ -10,7 +10,7 @@ export class Manga {
   }
 
   get fileName(): string {
-    // TODO 过滤 / 替换
+    // 过滤 / 替换
     // \ / : * ? " < > |
     const fileName = this.name
       .replaceAll("\\", "＼")

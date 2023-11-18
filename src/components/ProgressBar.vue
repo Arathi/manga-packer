@@ -5,7 +5,6 @@ interface Props {
   min?: number;
   max?: number;
   value?: number;
-  fractionDigits?: number;
   height?: number;
 }
 
@@ -13,25 +12,23 @@ const props = withDefaults(defineProps<Props>(), {
   min: 0,
   max: 100,
   value: 0,
-  fractionDigits: 2,
   height: 32,
 });
 
 const amount = computed(() => props.max - props.min);
-const actal = computed(() => props.value - props.min);
+const actual = computed(() => props.value - props.min);
 
 const progress = computed(() => {
   if (amount.value <= 0) return 0;
-  let p = actal.value / amount.value;
+  let p = actual.value / amount.value;
   if (p > 1) return 1;
   if (p < 0) return 0;
   return p;
 });
 
 const progressPercent = computed(() => {
-  const percent = progress.value * 100.0;
-  const formatted = percent.toFixed(props.fractionDigits);
-  return `${formatted}%`;
+  const percent = (progress.value * 100.0).toFixed(2);
+  return `${actual.value}/${amount.value} (${percent}%)`;
 });
 
 const heightWithUnit = computed(() => `${props.height}px`);
@@ -44,7 +41,7 @@ const fontSize = computed(() => {
   <div class="progress-bar">
     <progress
       :max="amount"
-      :value="actal"
+      :value="actual"
     />
     <div class="text">
       <span>{{progressPercent}}</span>

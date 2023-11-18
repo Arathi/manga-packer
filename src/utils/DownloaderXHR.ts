@@ -1,7 +1,6 @@
 import Downloader from "./Downloader";
 import {Page} from "../domains/Page";
-import * as LocalForage from "localforage";
-import {GM, GM_xmlhttpRequest} from "$";
+import {GM} from "$";
 import {Status} from "../domains/types";
 
 export default class DownloaderXHR extends Downloader {

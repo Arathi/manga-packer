@@ -100,7 +100,7 @@ export default class NHentaiRules implements SiteRules {
           extName = "png";
           break;
         default:
-          alert("未知的类型：" + pi.t);
+          alert("未知的图片类型：" + pi.t);
           return pages;
       }
 

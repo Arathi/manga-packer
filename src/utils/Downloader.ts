@@ -17,7 +17,7 @@ export default abstract class Downloader {
 
     // 从缓存获取
     blob = await this.db.getItem<Blob>(page.id);
-    if (blob != null) {
+    if (blob != null && blob.type != "text/html") {
       console.info(`从缓存读取${page.id}的文件内容`, blob);
       page.total = page.loaded = blob.size;
       page.status = Status.Success;

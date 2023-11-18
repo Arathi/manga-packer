@@ -7,10 +7,4 @@ import TaskList from "./components/TaskList.vue";
 </template>
 
 <style scoped lang="less">
-.test {
-
-  .pb {
-
-  }
-}
 </style>

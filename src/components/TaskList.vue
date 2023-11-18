@@ -85,8 +85,14 @@ async function fetch() {
   for (const page of results) {
     let cache = await downloader.getFromCache(page);
     if (cache != null) {
-      page.status = Status.Success;
-      page.loaded = page.total = cache.size;
+      if (cache.type != "text/html") {
+        page.status = Status.Success;
+        page.loaded = page.total = cache.size;
+      }
+      else {
+        page.status = Status.Failure;
+        page.loaded = page.total = cache.size;
+      }
     }
     else {
       page.status = Status.Pending;
@@ -182,6 +188,9 @@ function openSettingDialog() {
 
   display: flex;
   flex-direction: column;
+
+  border: 1px solid blue;
+  border-radius: 8px;
 
   .group {
     margin-bottom: 8px;

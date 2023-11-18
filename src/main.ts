@@ -10,7 +10,6 @@ import NHentaiRules from "./utils/NHentaiRules";
 import Downloader from "./utils/Downloader";
 import LocalForage from "localforage";
 import Packer from "./utils/Packer";
-import DownloaderAxios from "./utils/DownloaderAxios";
 import DownloaderXHR from "./utils/DownloaderXHR";
 import EHentaiRules from "./utils/EHentaiRules";
 
@@ -36,17 +35,14 @@ const url = new URL(unsafeWindow.location.href);
 console.info("url: ", url);
 switch (url.host) {
   case "telegra.ph":
-    console.info("telegraph");
     rules = new TelegraphRules();
     downloader = new DownloaderXHR(db);
     break;
   case "nhentai.net":
-    console.info("nhentai");
     rules = new NHentaiRules();
     downloader = new DownloaderXHR(db);
     break;
   case "e-hentai.org":
-    console.info("e-hentai");
     rules = new EHentaiRules();
     downloader = new DownloaderXHR(db);
     break;
