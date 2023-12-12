@@ -5,7 +5,13 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: { port: 31025 },
+  server: { 
+    port: 31025
+  },
+  preview: {
+    port: 31035,
+    open: 'manga-packer.user.js',
+  },
   plugins: [
     vue(),
     monkey({
@@ -21,7 +27,11 @@ export default defineConfig({
       },
       build: {
         externalGlobals: {
-          vue: cdn.jsdelivr('Vue', 'dist/vue.global.prod.js'),
+          // vue: cdn.jsdelivr('Vue', 'dist/vue.global.prod.js'),
+          // pinia: cdn.jsdelivr('Pinia', 'dist/pinia.iife.min.js'),
+          // axios: cdn.jsdelivr('axios', 'dist/axios.min.js'),
+          jszip: cdn.jsdelivr('JSZip', 'dist/jszip.min.js'),
+          'file-saver': cdn.jsdelivr('FileSaver', 'dist/FileSaver.min.js'),
         },
       },
     }),

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {computed, inject, onMounted, reactive, ref} from "vue";
-import {saveAs} from "file-saver";
 
 import SiteRules from "@utils/SiteRules";
 import Downloader from "@utils/Downloader";
@@ -120,7 +119,7 @@ function download() {
 /**
  * 打包
  */
-function pack() {
+async function pack() {
   if (packer == undefined) {
     console.warn("打包器注入失败！");
     return;
@@ -131,14 +130,22 @@ function pack() {
     return;
   }
 
-  const mg: Manga = manga!!.value;
-  packer.pack(pages).then((blob) => {
-    if (blob == null) {
-      console.warn("打包失败！");
-      return;
-    }
-    saveAs(blob, `${mg.fileName}.zip`);
-  });
+  const mg: Manga = manga!.value;
+  // packer.pack(pages).then((blob) => {
+  //   if (blob == null) {
+  //     console.warn("打包失败！");
+  //     return;
+  //   }
+  //   saveAs(blob, `${mg.fileName}.zip`);
+  // }).catch((error) => {
+  //   console.error("打包时发生错误：", error);
+  // });
+  packer.pack(pages, `${mg.fileName}.zip`);
+  // if (blob == null) {
+  //   console.warn("打包失败！");
+  //   return;
+  // }
+  // saveAs(blob, `${mg.fileName}.zip`);
 }
 
 /**
