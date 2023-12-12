@@ -1,7 +1,7 @@
 import Downloader from "./Downloader";
-import {Page} from "../domains/Page";
+import {Page} from "@domains/Page";
+import {Status} from "@domains/types";
 import {GM} from "$";
-import {Status} from "../domains/types";
 
 export default class DownloaderXHR extends Downloader {
   constructor(db: LocalForage) {

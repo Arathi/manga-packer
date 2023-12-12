@@ -1,7 +1,8 @@
-import SiteRules from "./SiteRules";
-import {Manga} from "../domains/Manga";
-import {Page} from "../domains/Page";
 import Axios, {AxiosInstance} from "axios";
+
+import SiteRules from "./SiteRules";
+import {Manga} from "@domains/Manga";
+import {Page} from "@domains/Page";
 import {unsafeWindow} from "$";
 
 const regexGallery = /\/g\/(\d+)\/([0-9a-f]+)/

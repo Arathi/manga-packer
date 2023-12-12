@@ -1,7 +1,8 @@
-import SiteRules from "./SiteRules";
-import {Manga} from "../domains/Manga";
-import {Page} from "../domains/Page";
 import sha1 from "crypto-js/sha1";
+
+import SiteRules from "./SiteRules";
+import {Manga} from "@domains/Manga";
+import {Page} from "@domains/Page";
 
 export default class TelegraphRules implements SiteRules {
   constructor() {

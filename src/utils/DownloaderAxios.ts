@@ -1,7 +1,7 @@
 import Axios, {AxiosHeaders, AxiosInstance, AxiosProgressEvent} from "axios";
 import Downloader from "./Downloader";
-import {Page} from "../domains/Page";
-import {Status} from "../domains/types";
+import {Page} from "@domains/Page";
+import {Status} from "@domains/types";
 
 export default class DownloaderAxios extends Downloader {
   axios: AxiosInstance;

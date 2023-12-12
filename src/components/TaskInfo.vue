@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
-import {Page} from "../domains/Page";
+import {Page} from "@domains/Page";
 import ProgressBar from "./ProgressBarEx.vue";
 
 interface Props {

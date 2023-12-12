@@ -1,5 +1,6 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
+import {createApp} from 'vue';
+import {createPinia} from 'pinia';
+import LocalForage from "localforage";
 import App from './App.vue';
 import {unsafeWindow} from "$";
 
@@ -8,7 +9,6 @@ import GeneralRules from "./utils/GeneralRules";
 import TelegraphRules from "./utils/TelegraphRules";
 import NHentaiRules from "./utils/NHentaiRules";
 import Downloader from "./utils/Downloader";
-import LocalForage from "localforage";
 import Packer from "./utils/Packer";
 import DownloaderXHR from "./utils/DownloaderXHR";
 import EHentaiRules from "./utils/EHentaiRules";
@@ -33,7 +33,8 @@ let downloader: Downloader | null = null;
 let packer: Packer = new Packer(db);
 
 const url = new URL(unsafeWindow.location.href);
-console.info("url: ", url);
+console.debug("url: ", url);
+
 switch (url.host) {
   case "telegra.ph":
     rules = new TelegraphRules();

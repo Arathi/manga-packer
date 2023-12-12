@@ -1,6 +1,6 @@
-import {Page} from "../domains/Page";
-import {Manga} from "../domains/Manga";
-import {Status} from "../domains/types";
+import {Page} from "@domains/Page";
+import {Manga} from "@domains/Manga";
+import {Status} from "@domains/types";
 
 export default abstract class Downloader {
   db: LocalForage;

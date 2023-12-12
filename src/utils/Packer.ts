@@ -1,5 +1,5 @@
 import JSZip from "jszip";
-import { Page } from "../domains/Page";
+import { Page } from "@domains/Page";
 
 export default class Packer {
   db: LocalForage;

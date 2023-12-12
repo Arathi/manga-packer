@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
-import { Manga } from "../domains/Manga";
-import { Page } from "../domains/Page";
+import { Manga } from "@domains/Manga";
+import { Page } from "@domains/Page";
 
 interface State {
   mangaList: Manga[],

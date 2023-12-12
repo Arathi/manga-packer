@@ -1,6 +1,6 @@
 import SiteRules from "./SiteRules";
-import {Manga} from "../domains/Manga";
-import {Page} from "../domains/Page";
+import {Manga} from "@domains/Manga";
+import {Page} from "@domains/Page";
 import {unsafeWindow} from "$";
 
 interface Gallery {

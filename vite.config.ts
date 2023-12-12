@@ -1,6 +1,7 @@
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
 import vue from '@vitejs/plugin-vue';
 import monkey, { cdn } from 'vite-plugin-monkey';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -25,5 +26,13 @@ export default defineConfig({
       },
     }),
   ],
-
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@domains': path.resolve(__dirname, 'src/domains'),
+      '@stores': path.resolve(__dirname, 'src/stores'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
+    }
+  }
 });

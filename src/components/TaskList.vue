@@ -2,13 +2,13 @@
 import {computed, inject, onMounted, reactive, ref} from "vue";
 import {saveAs} from "file-saver";
 
-import SiteRules from "../utils/SiteRules";
-import Downloader from "../utils/Downloader";
-import Packer from "../utils/Packer";
+import SiteRules from "@utils/SiteRules";
+import Downloader from "@utils/Downloader";
+import Packer from "@utils/Packer";
 
-import {Page} from "../domains/Page";
-import {Manga} from "../domains/Manga";
-import {Status} from "../domains/types";
+import {Page} from "@domains/Page";
+import {Manga} from "@domains/Manga";
+import {Status} from "@domains/types";
 
 import ProgressBar from "./ProgressBarEx.vue";
 import TaskInfo from "./TaskInfo.vue";
