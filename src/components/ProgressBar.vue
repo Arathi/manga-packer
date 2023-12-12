@@ -49,7 +49,7 @@ const fontSize = computed(() => {
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .progress-bar {
   position: relative;
   height: v-bind(heightWithUnit);

@@ -11,7 +11,7 @@ export default defineConfig({
       entry: 'src/main.ts',
       userscript: {
         icon: 'https://vitejs.dev/logo.svg',
-        namespace: 'npm/vite-plugin-monkey',
+        namespace: 'com.undsf.tmus.mgpk',
         match: [
           'https://telegra.ph/*',
           'https://nhentai.net/g/*/',
@@ -25,4 +25,5 @@ export default defineConfig({
       },
     }),
   ],
+
 });

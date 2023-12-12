@@ -15,6 +15,7 @@ import EHentaiRules from "./utils/EHentaiRules";
 
 const mountPoint = (() => {
   const node = document.createElement('div');
+  node.id = "mgpk-app";
   document.body.append(node);
   return node;
 })();

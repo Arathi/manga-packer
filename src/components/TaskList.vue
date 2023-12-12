@@ -2,9 +2,6 @@
 import {computed, inject, onMounted, reactive, ref} from "vue";
 import {saveAs} from "file-saver";
 
-import ProgressBar from "./ProgressBar.vue";
-import TaskInfo from "./TaskInfo.vue";
-
 import SiteRules from "../utils/SiteRules";
 import Downloader from "../utils/Downloader";
 import Packer from "../utils/Packer";
@@ -12,6 +9,9 @@ import Packer from "../utils/Packer";
 import {Page} from "../domains/Page";
 import {Manga} from "../domains/Manga";
 import {Status} from "../domains/types";
+
+import ProgressBar from "./ProgressBarEx.vue";
+import TaskInfo from "./TaskInfo.vue";
 
 // region props
 interface Props {
@@ -163,7 +163,7 @@ function openSettingDialog() {
         :min="0"
         :max="pageAmount"
         :value="completedAmount"
-        :height="32"
+        :height="24"
       />
     </div>
 
@@ -175,7 +175,7 @@ function openSettingDialog() {
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .task-list {
   position: fixed;
   right: 8px;
@@ -189,7 +189,7 @@ function openSettingDialog() {
   display: flex;
   flex-direction: column;
 
-  border: 1px solid blue;
+  border: 1px solid rgba(0, 0, 255, 1);
   border-radius: 8px;
 
   .group {
@@ -224,7 +224,7 @@ function openSettingDialog() {
 
   .tasks {
     flex: 1;
-    overflow: auto;
+    overflow-x: hidden;
   }
 }
 
@@ -234,11 +234,11 @@ function openSettingDialog() {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #00000000;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: gray;
+  background-color: rgba(0, 0, 0, 0.25);
   border-radius: 1px;
 }
 </style>

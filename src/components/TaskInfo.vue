@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {Page} from "../domains/Page";
 import {computed, ref} from "vue";
-import ProgressBar from "./ProgressBar.vue";
+import {Page} from "../domains/Page";
+import ProgressBar from "./ProgressBarEx.vue";
 
 interface Props {
   page: Page;
@@ -92,7 +92,7 @@ function onMouseLeave() {
 
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .task-info {
   display: flex;
   flex-direction: row;
