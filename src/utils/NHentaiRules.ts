@@ -45,8 +45,11 @@ interface NAppOptions {
 }
 
 export default class NHentaiRules implements SiteRules {
-  constructor() {
-    console.info("正在创建NHentai规则");
+  domain: string;
+
+  constructor(domain = `nhentai.net`) {
+    console.info(`正在创建NHentai规则，域名：${domain}`);
+    this.domain = domain;
   }
 
   async crawlManga(): Promise<Manga|null> {
@@ -106,8 +109,8 @@ export default class NHentaiRules implements SiteRules {
 
       const fileName = `${pageNumber}.${extName}`;
       const pageId = `${mangaId}-${pageNumber}`;
-      const url = `https://i${options.media_server}.nhentai.net/galleries/${gallery.media_id}/${index+1}.${extName}`;
-      const referer = `https://nhentai.net/g/${gallery.id}/${index+1}/`;
+      const url = `https://i${options.media_server}.${this.domain}/galleries/${gallery.media_id}/${index+1}.${extName}`;
+      const referer = `https://${this.domain}/g/${gallery.id}/${index+1}/`;
 
       const page = new Page(pageId, mangaId, fileName, url, referer);
       pages.push(page);

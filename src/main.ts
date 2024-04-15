@@ -8,6 +8,7 @@ import SiteRules from "./utils/SiteRules";
 import GeneralRules from "./utils/GeneralRules";
 import TelegraphRules from "./utils/TelegraphRules";
 import NHentaiRules from "./utils/NHentaiRules";
+import NHentaiXRules from "./utils/NHentaiXRules";
 import Downloader from "./utils/Downloader";
 import Packer from "./utils/Packer";
 import DownloaderXHR from "./utils/DownloaderXHR";
@@ -41,7 +42,11 @@ switch (url.host) {
     downloader = new DownloaderXHR(db);
     break;
   case "nhentai.net":
-    rules = new NHentaiRules();
+    rules = new NHentaiRules(url.host);
+    downloader = new DownloaderXHR(db);
+    break;
+  case "nhentai.xxx":
+    rules = new NHentaiXRules(url.host);
     downloader = new DownloaderXHR(db);
     break;
   case "e-hentai.org":
